@@ -37,12 +37,13 @@ public class StudentController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Student> deleteStudent(@PathVariable Long id) {
+        studentService.deleteStudent(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     
     @GetMapping("/all")
     public ResponseEntity<List<Student>> getStudents() { 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(studentService.getStudents(), HttpStatus.OK);
     }
     
     
