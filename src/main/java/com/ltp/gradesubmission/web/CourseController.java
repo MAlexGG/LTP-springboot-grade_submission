@@ -1,6 +1,7 @@
 package com.ltp.gradesubmission.web;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -15,9 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ltp.gradesubmission.entity.Course;
+import com.ltp.gradesubmission.entity.Student;
 import com.ltp.gradesubmission.service.CourseService;
 
 import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.PutMapping;
 
 
 @RestController
@@ -51,5 +54,15 @@ public class CourseController {
         return new ResponseEntity<>(courseService.getCourses(), HttpStatus.OK);
     }
 
+    @PutMapping("/{courseId}/student/{studentId}")
+    public ResponseEntity<Course> enrollStudentToCourse(@PathVariable Long courseId, @PathVariable Long studentId) {        
+        return new ResponseEntity<>(courseService.addStudentToCourse(studentId, courseId) , HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/students")
+    public ResponseEntity<Set<Student>> getEnrolledStudents(@PathVariable Long id) {
+        return new ResponseEntity<>(courseService.getEnrolledStudents(id) , HttpStatus.OK);
+    }
+    
 
 }
