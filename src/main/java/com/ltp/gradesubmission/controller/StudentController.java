@@ -1,4 +1,4 @@
-package com.ltp.gradesubmission.web;
+package com.ltp.gradesubmission.controller;
 
 
 import org.springframework.web.bind.annotation.RestController;
@@ -42,9 +42,9 @@ public class StudentController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Student> deleteStudent(@PathVariable Long id) {
+    public ResponseEntity<String> deleteStudent(@PathVariable Long id) {
         studentService.deleteStudent(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>("The student with id " + id + " has been deleted", HttpStatus.OK);
     }
     
     @GetMapping("/all")

@@ -1,4 +1,4 @@
-package com.ltp.gradesubmission.web;
+package com.ltp.gradesubmission.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

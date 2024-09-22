@@ -26,7 +26,8 @@ public class GradeSubmissionApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		    Student[] students = new Student[] {
+		
+		Student[] students = new Student[] {
             new Student("Harry Potter", LocalDate.parse(("1980-07-31"))),
             new Student("Ron Weasley", LocalDate.parse(("1980-03-01"))),
             new Student("Hermione Granger", LocalDate.parse(("1979-09-19"))),
@@ -49,9 +50,5 @@ public class GradeSubmissionApplication implements CommandLineRunner {
 		for (int i = 0; i < courses.length; i++) {
 			courseRepository.save(courses[i]);
 		}
-
 	}
-
-	
-
 }

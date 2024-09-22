@@ -1,4 +1,4 @@
-package com.ltp.gradesubmission.web;
+package com.ltp.gradesubmission.controller;
 
 import java.util.List;
 import java.util.Set;
