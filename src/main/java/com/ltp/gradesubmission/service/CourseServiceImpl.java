@@ -10,6 +10,7 @@ import com.ltp.gradesubmission.dto.EnrollmentDTO;
 import com.ltp.gradesubmission.entity.Course;
 import com.ltp.gradesubmission.entity.Student;
 import com.ltp.gradesubmission.exception.CourseNotFoundException;
+import com.ltp.gradesubmission.exception.CourseWithNotEnrolledStudentsException;
 import com.ltp.gradesubmission.repository.CourseRepository;
 import com.ltp.gradesubmission.repository.StudentRepository;
 
@@ -50,7 +51,7 @@ public class CourseServiceImpl implements CourseService {
     public EnrollmentDTO addStudentToCourse(Long studentId, Long courseId){
         Course course = getCourse(courseId);
         Optional<Student> student = studentRepository.findById(studentId);
-        Student unwrappedStudent = StudentServiceImpl.unwrapStudent(student, courseId);
+        Student unwrappedStudent = StudentServiceImpl.unwrapStudent(student, studentId);
         course.getStudents().add(unwrappedStudent);
         courseRepository.save(course);
         enrollmentDTO.setCourseId(courseId);
@@ -62,7 +63,8 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Set<Student> getEnrolledStudents(Long id) {
         Course course = getCourse(id);
-        return course.getStudents();
+        if(course.getStudents().isEmpty()) throw new CourseWithNotEnrolledStudentsException(id);
+        else return course.getStudents();
     }
 
 
