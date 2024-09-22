@@ -6,6 +6,7 @@ import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
+import com.ltp.gradesubmission.dto.EnrollmentDTO;
 import com.ltp.gradesubmission.entity.Course;
 import com.ltp.gradesubmission.entity.Student;
 import com.ltp.gradesubmission.exception.CourseNotFoundException;
@@ -21,6 +22,8 @@ public class CourseServiceImpl implements CourseService {
 
     CourseRepository courseRepository;
     StudentRepository studentRepository;
+    EnrollmentDTO enrollmentDTO;
+
 
     @Override
     public Course getCourse(Long id) {
@@ -44,12 +47,16 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Course addStudentToCourse(Long studentId, Long courseId){
+    public EnrollmentDTO addStudentToCourse(Long studentId, Long courseId){
         Course course = getCourse(courseId);
         Optional<Student> student = studentRepository.findById(studentId);
         Student unwrappedStudent = StudentServiceImpl.unwrapStudent(student, courseId);
         course.getStudents().add(unwrappedStudent);
-        return courseRepository.save(course);
+        courseRepository.save(course);
+        enrollmentDTO.setCourseId(courseId);
+        enrollmentDTO.setCourseName(course.getSubject());
+        enrollmentDTO.setStudent(unwrappedStudent);
+        return enrollmentDTO;
     }
 
     @Override

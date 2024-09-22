@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ltp.gradesubmission.dto.EnrollmentDTO;
 import com.ltp.gradesubmission.entity.Course;
 import com.ltp.gradesubmission.entity.Student;
 import com.ltp.gradesubmission.service.CourseService;
@@ -55,8 +56,8 @@ public class CourseController {
     }
 
     @PutMapping("/{courseId}/student/{studentId}")
-    public ResponseEntity<Course> enrollStudentToCourse(@PathVariable Long courseId, @PathVariable Long studentId) {        
-        return new ResponseEntity<>(courseService.addStudentToCourse(studentId, courseId) , HttpStatus.OK);
+    public ResponseEntity<EnrollmentDTO> enrollStudentToCourse(@PathVariable Long courseId, @PathVariable Long studentId) {        
+        return new ResponseEntity<>(courseService.addStudentToCourse(studentId, courseId), HttpStatus.OK);
     }
 
     @GetMapping("/{id}/students")

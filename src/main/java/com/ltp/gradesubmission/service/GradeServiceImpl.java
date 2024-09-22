@@ -3,8 +3,12 @@ package com.ltp.gradesubmission.service;
 import java.util.List;
 import java.util.Optional;
 
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 
+import com.ltp.gradesubmission.dto.courseGradeDTO.CourseGradesDTO;
+import com.ltp.gradesubmission.dto.courseGradeDTO.GradeDTO;
 import com.ltp.gradesubmission.entity.Course;
 import com.ltp.gradesubmission.entity.Grade;
 import com.ltp.gradesubmission.entity.Student;
@@ -61,8 +65,11 @@ public class GradeServiceImpl implements GradeService {
     }
 
     @Override
-    public List<Grade> getCourseGrades(Long courseId) {
-        return gradeRepository.findByCourseId(courseId);
+    public CourseGradesDTO getCourseGrades(Long courseId) {
+        List<Grade> grades = gradeRepository.findByCourseId(courseId);
+        Optional<Course> course = courseRepository.findById(courseId);
+        List<GradeDTO> gradeDTO = grades.stream().map(grade -> new GradeDTO(grade.getId(), grade.getScore(), grade.getStudent())).collect(Collectors.toList());
+        return new CourseGradesDTO(course, gradeDTO);
     }
 
     @Override

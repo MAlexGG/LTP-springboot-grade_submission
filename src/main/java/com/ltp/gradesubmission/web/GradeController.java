@@ -3,6 +3,7 @@ package com.ltp.gradesubmission.web;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ltp.gradesubmission.dto.courseGradeDTO.CourseGradesDTO;
 import com.ltp.gradesubmission.entity.Grade;
 import com.ltp.gradesubmission.service.GradeService;
 
@@ -54,8 +55,9 @@ public class GradeController {
     }
 
     @GetMapping("/course/{courseId}")
-    public ResponseEntity<List<Grade>> getCoursesGrades(@PathVariable Long courseId) {
-        return new ResponseEntity<>(gradeService.getCourseGrades(courseId) , HttpStatus.OK);
+    public ResponseEntity<CourseGradesDTO> getCoursesGrades(@PathVariable Long courseId) {
+        CourseGradesDTO courseGradesDTO = gradeService.getCourseGrades(courseId);
+        return new ResponseEntity<>(courseGradesDTO , HttpStatus.OK);
     }
 
     @GetMapping("/all")
