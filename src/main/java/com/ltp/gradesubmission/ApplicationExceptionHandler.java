@@ -15,13 +15,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.ltp.gradesubmission.exception.CourseNotFoundException;
 import com.ltp.gradesubmission.exception.CourseWithNotEnrolledStudentsException;
+import com.ltp.gradesubmission.exception.EntityNotFoundException;
 import com.ltp.gradesubmission.exception.ErrorResponse;
 import com.ltp.gradesubmission.exception.GradeNotFoundException;
 import com.ltp.gradesubmission.exception.StudentNotEnrolledException;
 import com.ltp.gradesubmission.exception.StudentNotEnrolledInAnyCourseException;
-import com.ltp.gradesubmission.exception.StudentNotFoundException;
 
 @ControllerAdvice
 public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler {
@@ -38,7 +37,7 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler({CourseNotFoundException.class, StudentNotFoundException.class, GradeNotFoundException.class, StudentNotEnrolledException.class, StudentNotEnrolledInAnyCourseException.class, CourseWithNotEnrolledStudentsException.class})
+    @ExceptionHandler({EntityNotFoundException.class, GradeNotFoundException.class, StudentNotEnrolledException.class, StudentNotEnrolledInAnyCourseException.class, CourseWithNotEnrolledStudentsException.class})
     public ResponseEntity<Object> handleResourceNotFoundException(RuntimeException ex){
         ErrorResponse error = new ErrorResponse(Arrays.asList(ex.getMessage()));
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND); 
